@@ -3,12 +3,11 @@ package com.example.demoTest.entities;
 import jakarta.persistence.*;
 
 @Entity
+@Table(name = "files")
 public class File {
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "filename")
     private String filename;
 
     public File() {
