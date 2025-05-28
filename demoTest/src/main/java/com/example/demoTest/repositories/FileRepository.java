@@ -6,6 +6,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+
 @Repository
 public interface FileRepository extends JpaRepository<File, Long> {
     List<File> findByid(Long id);

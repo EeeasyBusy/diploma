@@ -16,6 +16,9 @@ public class User {
     public User() {
     }
 
+    public User(long l, String name, String password) {
+    }
+
     public Long getId() {
         return id;
     }
