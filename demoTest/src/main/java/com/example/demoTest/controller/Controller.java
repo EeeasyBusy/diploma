@@ -120,6 +120,25 @@ public class Controller {
             throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Ошибка удаления");
         }
     }
+    @DeleteMapping("/users/{userId}/files/{fileId}")
+    public ResponseEntity<Void> deleteFile(
+            @PathVariable Long userId,
+            @PathVariable Long fileId) {
+
+        log.info("Удаление файла ID={} для пользователя ID={}", userId, fileId);
+        try {
+            fileService.deleteFile(userId, fileId);
+            log.info("Файл ID={} успешно удален", fileId);
+            return ResponseEntity.noContent().build();
+        } catch (ResponseStatusException exception) {
+            log.warn("Удаление не удалось: {}", exception.getReason());
+            throw exception;
+        } catch (Exception exception) {
+            log.error("Ошибка удаления файла: {}", exception.getMessage(), exception);
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR,
+                    "Ошибка удаления файла");
+        }
+    }
 
     @GetMapping("/favicon.ico")
     @ResponseBody

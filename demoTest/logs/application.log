@@ -475,3 +475,107 @@ java.lang.RuntimeException: Ошибка удаления пользовател
 2025-06-04 19:20:18 [main] INFO  c.e.demoTest.controller.Controller - Пользователь обновлен: ID=1
 2025-06-04 19:20:18 [main] INFO  c.e.demoTest.controller.Controller - Controller инициализирован
 2025-06-04 19:20:18 [main] INFO  c.e.demoTest.controller.Controller - Запрос к корневому эндпоинту
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Controller инициализирован
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Удаление файла ID=1 для пользователя ID=999
+2025-06-04 20:02:35 [main] WARN  c.e.demoTest.controller.Controller - Удаление не удалось: null
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Controller инициализирован
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Создание пользователя: username=testUser
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Пользователь создан: ID=1
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Controller инициализирован
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Запрос пользователя: ID=1
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Пользователь найден: ID=1, username=null
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Controller инициализирован
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Удаление пользователя: ID=1
+2025-06-04 20:02:35 [main] ERROR c.e.demoTest.controller.Controller - Ошибка удаления пользователя ID=1: Ошибка удаления пользователя
+java.lang.RuntimeException: Ошибка удаления пользователя
+	at com.example.demoTest.service.UserService.deleteUser(UserService.java:101)
+	at com.example.demoTest.controller.Controller.deleteUser(Controller.java:115)
+	at com.example.demoTest.ControllerTest.lambda$deleteUser_WhenDeletionFails$0(ControllerTest.java:113)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:53)
+	at org.junit.jupiter.api.AssertThrows.assertThrows(AssertThrows.java:35)
+	at org.junit.jupiter.api.Assertions.assertThrows(Assertions.java:3128)
+	at com.example.demoTest.ControllerTest.deleteUser_WhenDeletionFails(ControllerTest.java:113)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:104)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at org.junit.platform.commons.util.ReflectionUtils.invokeMethod(ReflectionUtils.java:767)
+	at org.junit.jupiter.engine.execution.MethodInvocation.proceed(MethodInvocation.java:60)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$ValidatingInvocation.proceed(InvocationInterceptorChain.java:131)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.intercept(TimeoutExtension.java:156)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestableMethod(TimeoutExtension.java:147)
+	at org.junit.jupiter.engine.extension.TimeoutExtension.interceptTestMethod(TimeoutExtension.java:86)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker$ReflectiveInterceptorCall.lambda$ofVoidMethod$0(InterceptingExecutableInvoker.java:103)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.lambda$invoke$0(InterceptingExecutableInvoker.java:93)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain$InterceptedInvocation.proceed(InvocationInterceptorChain.java:106)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.proceed(InvocationInterceptorChain.java:64)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.chainAndInvoke(InvocationInterceptorChain.java:45)
+	at org.junit.jupiter.engine.execution.InvocationInterceptorChain.invoke(InvocationInterceptorChain.java:37)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:92)
+	at org.junit.jupiter.engine.execution.InterceptingExecutableInvoker.invoke(InterceptingExecutableInvoker.java:86)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.lambda$invokeTestMethod$8(TestMethodTestDescriptor.java:217)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.invokeTestMethod(TestMethodTestDescriptor.java:213)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:138)
+	at org.junit.jupiter.engine.descriptor.TestMethodTestDescriptor.execute(TestMethodTestDescriptor.java:68)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:156)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.invokeAll(SameThreadHierarchicalTestExecutorService.java:41)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$6(NodeTestTask.java:160)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$8(NodeTestTask.java:146)
+	at org.junit.platform.engine.support.hierarchical.Node.around(Node.java:137)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.lambda$executeRecursively$9(NodeTestTask.java:144)
+	at org.junit.platform.engine.support.hierarchical.ThrowableCollector.execute(ThrowableCollector.java:73)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.executeRecursively(NodeTestTask.java:143)
+	at org.junit.platform.engine.support.hierarchical.NodeTestTask.execute(NodeTestTask.java:100)
+	at org.junit.platform.engine.support.hierarchical.SameThreadHierarchicalTestExecutorService.submit(SameThreadHierarchicalTestExecutorService.java:35)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestExecutor.execute(HierarchicalTestExecutor.java:57)
+	at org.junit.platform.engine.support.hierarchical.HierarchicalTestEngine.execute(HierarchicalTestEngine.java:54)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:198)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:169)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:93)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.lambda$execute$0(EngineExecutionOrchestrator.java:58)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.withInterceptedStreams(EngineExecutionOrchestrator.java:141)
+	at org.junit.platform.launcher.core.EngineExecutionOrchestrator.execute(EngineExecutionOrchestrator.java:57)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:103)
+	at org.junit.platform.launcher.core.DefaultLauncher.execute(DefaultLauncher.java:85)
+	at org.junit.platform.launcher.core.DelegatingLauncher.execute(DelegatingLauncher.java:47)
+	at org.junit.platform.launcher.core.SessionPerRequestLauncher.execute(SessionPerRequestLauncher.java:63)
+	at com.intellij.junit5.JUnit5IdeaTestRunner.startRunnerWithArgs(JUnit5IdeaTestRunner.java:57)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater$1.execute(IdeaTestRunner.java:38)
+	at com.intellij.rt.execution.junit.TestsRepeater.repeat(TestsRepeater.java:11)
+	at com.intellij.rt.junit.IdeaTestRunner$Repeater.startRunnerWithArgs(IdeaTestRunner.java:35)
+	at com.intellij.rt.junit.JUnitStarter.prepareStreamsAndStart(JUnitStarter.java:232)
+	at com.intellij.rt.junit.JUnitStarter.main(JUnitStarter.java:55)
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Controller инициализирован
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Запрос списка всех пользователей
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Найдено пользователей: 2
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Controller инициализирован
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Обновление пользователя: ID=1
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Пользователь обновлен: ID=1
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Controller инициализирован
+2025-06-04 20:02:35 [main] INFO  c.e.demoTest.controller.Controller - Запрос к корневому эндпоинту
+2025-06-04 20:02:49 [main] INFO  c.e.demoTest.service.FileService - Попытка удаления файла ID=1 
+2025-06-04 20:02:49 [main] INFO  c.e.demoTest.service.FileService - Загрузка файла для пользователя ID=1, размер файла=0 байт
+2025-06-04 20:02:49 [main] WARN  c.e.demoTest.service.FileService - Пустой файл для пользователя ID=1
+2025-06-04 20:02:49 [main] INFO  c.e.demoTest.service.FileService - Загрузка файла для пользователя ID=-1, размер файла=7 байт
+2025-06-04 20:02:49 [main] WARN  c.e.demoTest.service.FileService - Пользователь не найден: ID=-1
+2025-06-04 20:03:05 [main] INFO  c.e.demoTest.service.FileService - Попытка удаления файла ID=1 
+2025-06-04 20:10:24 [main] INFO  c.e.demoTest.service.FileService - Попытка удаления файла ID=1 
+2025-06-04 20:10:24 [main] WARN  c.e.demoTest.service.FileService - Пользователь не найден: ID=999

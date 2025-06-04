@@ -4,6 +4,7 @@ import com.example.demoTest.controller.Controller;
 import com.example.demoTest.entities.User;
 import com.example.demoTest.repositories.FileRepository;
 import com.example.demoTest.repositories.UserRepository;
+import com.example.demoTest.service.FileService;
 import com.example.demoTest.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,7 +26,9 @@ import static org.mockito.Mockito.*;
 class ControllerTest {
 
     @Mock
-    private UserService UserService;
+    private UserService userService;
+    @Mock
+    private FileService fileService;
 
     @Mock
     private UserRepository userRepository;
@@ -50,12 +53,12 @@ class ControllerTest {
         savedUser.setId(1L);
         savedUser.setUserName("testUser");
 
-        when(UserService.createUser(user)).thenReturn(savedUser);
+        when(userService.createUser(user)).thenReturn(savedUser);
         ResponseEntity<User> response = controller.createUser(user);
 
         assertEquals(HttpStatus.CREATED, response.getStatusCode());
         assertEquals(savedUser, response.getBody());
-        verify(UserService, times(1)).createUser(user);
+        verify(userService, times(1)).createUser(user);
     }
 
     @Test
@@ -67,46 +70,59 @@ class ControllerTest {
         updatedUser.setId(userId);
         updatedUser.setUserName("updatedUser");
 
-        when(UserService.updateUser(userId, userDetails)).thenReturn(updatedUser);
+        when(userService.updateUser(userId, userDetails)).thenReturn(updatedUser);
         ResponseEntity<User> response = controller.updateUser(userId, userDetails);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(updatedUser, response.getBody());
-        verify(UserService, times(1)).updateUser(userId, userDetails);
+        verify(userService, times(1)).updateUser(userId, userDetails);
     }
 
     @Test
     void getAllUsers_ReturnListOfUsers() {
         List<User> users = Arrays.asList(new User(1L, "user1", "123"), new User(2L, "user2", "1234"));
-        when(UserService.getAllUsers()).thenReturn(users);
+        when(userService.getAllUsers()).thenReturn(users);
 
         ResponseEntity<List<User>> response = controller.getAllUsers();
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(2, response.getBody().size());
-        verify(UserService, times(1)).getAllUsers();
+        verify(userService, times(1)).getAllUsers();
     }
 
     @Test
     void getUserById_ReturnUser() {
         Long userId = 1L;
         User user = new User(userId, "user1", "123");
-        when(UserService.getUserById(userId)).thenReturn(user);
+        when(userService.getUserById(userId)).thenReturn(user);
 
         ResponseEntity<User> response = controller.getUserById(userId);
 
         assertEquals(HttpStatus.OK, response.getStatusCode());
         assertEquals(user, response.getBody());
-        verify(UserService, times(1)).getUserById(userId);
+        verify(userService, times(1)).getUserById(userId);
     }
 
     @Test
     void deleteUser_WhenDeletionFails() {
         Long userId = 1L;
         doThrow(new RuntimeException("Ошибка удаления пользователя"))
-                .when(UserService)
+                .when(userService)
                 .deleteUser(userId);
 
         assertThrows(ResponseStatusException.class, () -> controller.deleteUser(userId));
+    }
+
+    @Test
+    void deleteFile_WhenFileNotExists() {
+        Long userId = 1L;
+        Long fileId = 999L;
+        doThrow(new ResponseStatusException(HttpStatus.NOT_FOUND))
+                .when(fileService).deleteFile(userId, fileId);
+
+        assertThrows(ResponseStatusException.class, () -> {
+            controller.deleteFile(userId, fileId);
+        });
+        verify(fileService, times(1)).deleteFile(userId, fileId);
     }
 }

@@ -4,6 +4,7 @@ import com.example.demoTest.entities.File;
 import com.example.demoTest.entities.User;
 import com.example.demoTest.repositories.FileRepository;
 import com.example.demoTest.repositories.UserRepository;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,5 +52,27 @@ public class FileService {
                 "fileId", savedFile.getId(),
                 "userId", userId
         );
+    }
+
+    @Transactional
+    public void deleteFile(Long userId, Long fileId) {
+        log.info("Попытка удаления файла ID={} ", fileId);
+        validateUserExists(userId);
+
+        File file = fileRepository.findById(fileId)
+                .orElseThrow(() -> {
+                    log.warn("Файл ID={} не найден", fileId);
+                    return new ResponseStatusException(HttpStatus.NOT_FOUND, "Файл не найден");
+                });
+
+        fileRepository.delete(file);
+        log.info("Файл ID={} успешно удален", fileId);
+    }
+
+    private void validateUserExists(Long userId) {
+        if (!userRepository.existsById(userId)) {
+            log.warn("Пользователь не найден: ID={}", userId);
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден");
+        }
     }
 }
