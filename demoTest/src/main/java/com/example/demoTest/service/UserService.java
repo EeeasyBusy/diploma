@@ -14,14 +14,14 @@ import java.util.List;
 
 @Slf4j
 @Service
-public class FileAndUserService {
+public class UserService {
+    private final BCryptPasswordEncoder passwordEncoder;
     @Autowired
     private FileRepository fileRepository;
-
     @Autowired
     private UserRepository userRepository;
-    private final BCryptPasswordEncoder passwordEncoder;
-    public FileAndUserService(UserRepository userRepository) {
+
+    public UserService(UserRepository userRepository) {
         this.userRepository = userRepository;
         this.passwordEncoder = new BCryptPasswordEncoder();
     }

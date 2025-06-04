@@ -1,10 +1,10 @@
 package com.example.demoTest.controller;
 
-import com.example.demoTest.entities.File;
 import com.example.demoTest.entities.User;
 import com.example.demoTest.repositories.FileRepository;
 import com.example.demoTest.repositories.UserRepository;
-import com.example.demoTest.service.FileAndUserService;
+import com.example.demoTest.service.FileService;
+import com.example.demoTest.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,15 +22,18 @@ import java.util.Map;
 @RequestMapping("/cloud'")
 public class Controller {
     @Autowired
-    private final FileAndUserService fileAndUserService;
+    private final UserService UserService;
+    @Autowired
+    private final FileService fileService;
     @Autowired
     private UserRepository userRepository;
     @Autowired
     private FileRepository fileRepository;
 
     @Autowired
-    public Controller(FileAndUserService fileAndUserService) {
-        this.fileAndUserService = fileAndUserService;
+    public Controller(UserService UserService, FileService fileService) {
+        this.UserService = UserService;
+        this.fileService = fileService;
         log.info("Controller инициализирован");
     }
 
@@ -44,7 +47,7 @@ public class Controller {
     public ResponseEntity<User> createUser(@RequestBody User user) {
         log.info("Создание пользователя: username={}", user.getUserName());
         try {
-            User savedUser = fileAndUserService.createUser(user);
+            User savedUser = UserService.createUser(user);
             log.info("Пользователь создан: ID={}", savedUser.getId());
             return ResponseEntity.status(201).body(savedUser);
         } catch (Exception exception) {
@@ -55,35 +58,19 @@ public class Controller {
 
     @PostMapping("/{userId}/upload-file")
     public ResponseEntity<?> uploadUserFile(@PathVariable Long userId, @RequestParam("file") MultipartFile file) {
-        log.info("Загрузка файла для пользователя ID={}, размер файла={} байт", userId, file.getSize());
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> {
-                    log.warn("Пользователь не найден: ID={}", userId);
-                    return new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден");
-                });
-        if (file.isEmpty()) {
-            log.warn("Пустой файл для пользователя ID={}", userId);
-            return ResponseEntity.badRequest().body("Файл не выбран");
-        }
-
+        log.info("Начало загрузки файла для пользователя с идентификатором: {}, размер файла: {} байт", userId, file.getSize());
         try {
-            File newFile = new File();
-            newFile.setUserId(userId);
-            newFile.setFilename(file.getOriginalFilename());
-            newFile.setFileData(file.getBytes());
-            File savedFile = fileRepository.save(newFile);
-            log.info("Файл загружен: ID={}, имя={}, пользователь ID={}", savedFile.getId(), file.getOriginalFilename(), userId);
-            return ResponseEntity.ok(Map.of(
-                    "message", "Файл успешно загружен",
-                    "fileId", savedFile.getId(),
-                    "userId", userId
-            ));
+            Map<String, Object> response = fileService.uploadUserFile(userId, file);
+            log.info("Файл успешно загружен для пользователя ID: {}. Подробности файла: {}", userId, response.toString());
+            return ResponseEntity.ok(response);
+
+        } catch (IllegalArgumentException exception) {
+            log.warn("Ошибка валидации: {}", exception.getMessage());
+            return ResponseEntity.badRequest().body(exception.getMessage());
 
         } catch (IOException exception) {
             log.error("Ошибка загрузки файла: {}", exception.getMessage(), exception);
-            throw new ResponseStatusException(
-                    HttpStatus.INTERNAL_SERVER_ERROR,
-                    "Ошибка загрузки файла: " + exception.getMessage());
+            throw new ResponseStatusException(HttpStatus.INTERNAL_SERVER_ERROR, "Ошибка загрузки файла: " + exception.getMessage());
         }
     }
 
@@ -92,7 +79,7 @@ public class Controller {
         log.info("Обновление пользователя: ID={}", id);
         try {
 
-            User updatedUser = fileAndUserService.updateUser(id, userDetails);
+            User updatedUser = UserService.updateUser(id, userDetails);
             log.info("Пользователь обновлен: ID={}", id);
             return ResponseEntity.ok(updatedUser);
         } catch (Exception exception) {
@@ -104,7 +91,7 @@ public class Controller {
     @GetMapping("/files")
     public ResponseEntity<List<User>> getAllUsers() {
         log.info("Запрос списка всех пользователей");
-        List<User> users = fileAndUserService.getAllUsers();
+        List<User> users = UserService.getAllUsers();
         log.info("Найдено пользователей: {}", users.size());
         return ResponseEntity.ok(users);
     }
@@ -112,7 +99,7 @@ public class Controller {
     @GetMapping("/{id}")
     public ResponseEntity<User> getUserById(@PathVariable Long id) {
         log.info("Запрос пользователя: ID={}", id);
-        User user = fileAndUserService.getUserById(id);
+        User user = UserService.getUserById(id);
         if (user == null) {
             log.warn("Пользователь не найден: ID={}", id);
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Пользователь не найден");
@@ -125,7 +112,7 @@ public class Controller {
     public ResponseEntity<Void> deleteUser(@PathVariable Long id) {
         log.info("Удаление пользователя: ID={}", id);
         try {
-            fileAndUserService.deleteUser(id);
+            UserService.deleteUser(id);
             log.info("Пользователь удален: ID={}", id);
             return ResponseEntity.noContent().build();
         } catch (Exception exception) {
